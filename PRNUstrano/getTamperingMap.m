@@ -23,35 +23,28 @@ function[out] = getTamperingMap(path)
     PRNU = PRNUs(:,:,winnerPRNU);
 
     out = zeros(imageY/dim,imageX/dim);
-    maxVal = -1000000;
-    minVal = 1000000;
+    
     for i = 0:imageY/dim-1
         for j = 0:imageX/dim-1
             y1 = i*dim+1;
             x1 = j*dim+1;
             y2 = y1+dim-1;
             x2 = x1+dim-1;
-            temp = corr2(I(y1:y2,x1:x2).*PRNU(y1:y2,x1:x2),den(y1:y2,x1:x2));
-            out(i+1,j+1) = temp;
-            if temp > maxVal
-                maxVal = temp;
-            end
-            if temp < minVal
-                minVal = temp;
-            end
+            out(i+1,j+1) = corr2(I(y1:y2,x1:x2).*PRNU(y1:y2,x1:x2),den(y1:y2,x1:x2));
         end
     end
 
 
-    out = imgaussfilt(out,1);
+    out = imgaussfilt(out,5);
+    
+    imshow(toImage(out));
+    
     maxVal = max(out(:));
     minVal = min(out(:));
-    threshold = minVal+(maxVal-minVal)*0.5;
+    threshold = minVal+(maxVal-minVal)*0.4;
     [a,b] = size(out);
     for i = 1:a
         for j = 1:b
-            
-%            out(i,j) = (out(i,j)-minVal)*toMul;
             if out(i,j)<threshold
                 out(i,j) = 0;
             else
@@ -59,23 +52,14 @@ function[out] = getTamperingMap(path)
             end
         end
     end
-%     for i = 1:a
-%         for j = 1:b
-%             y1 = max([i-2,1]);
-%             x1 = max([j-2,1]);
-%             y2 = min([i+2,i]);
-%             x2 = min([j+2,j]);
-%             val = sum(sum(out(y1:y2, x1:x2)))/25;%((x2-x1+1)*(y2-y1+1));
-%             if val < 175
-%                 out(i,j) = 0;%nero
-%             else
-%                 out(i,j) = 255;%bianco
-%             end
-%         end
-%     end
     
-    out = uint8(out);
-%    out = uint8(imgaussfilt(out,1));
+%    out = uint8(out);
     
-    %surf(out);
+    figure,imshow(uint8(out));
+
+%    out = uint8(medfilt2(out,[7 7]));
+    
+    out = uint8(imopen(out,strel('disk',7)));
+
+    figure,imshow(out);
 end
