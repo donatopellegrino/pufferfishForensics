@@ -3,10 +3,11 @@ cameraPath  = uigetdir();
 list = dir(cameraPath);
 
 list = {list.name};
+list = list(3:end);
 
 [a,b] = size(list);
 
-for i = 13:13
+for i = 1:1
     disp(i);
     temp = getTamperingMap(strcat(cameraPath, "/", list{i}));
     %imshow(temp);

@@ -35,9 +35,9 @@ function[out] = getTamperingMap(path)
     end
 
 
-    out = imgaussfilt(out,5);
+    out = imgaussfilt(out,2);
     
-    imshow(toImage(out));
+    %imshow(toImage(out));
     
     maxVal = max(out(:));
     minVal = min(out(:));
@@ -53,13 +53,16 @@ function[out] = getTamperingMap(path)
         end
     end
     
-%    out = uint8(out);
-    
     figure,imshow(uint8(out));
+    
+%    out = uint8(out);
 
 %    out = uint8(medfilt2(out,[7 7]));
-    
-    out = uint8(imopen(out,strel('disk',7)));
 
-    figure,imshow(out);
+%    out = uint8(imopen(out,strel('disk',3)));
+
+%    out = uint8(imdilate(out,strel('disk', 5)));
+
+%    figure,imshow(out);
+
 end
