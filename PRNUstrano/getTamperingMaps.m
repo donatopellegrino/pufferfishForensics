@@ -7,7 +7,7 @@ list = list(3:end);
 
 [a,b] = size(list);
 
-for i = 1:1
+for i = 11:11
     disp(i);
     temp = getTamperingMap(strcat(cameraPath, "/", list{i}));
     %imshow(temp);

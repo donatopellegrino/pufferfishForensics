@@ -55,7 +55,6 @@ function[out] = getTamperingMap(path)
     
     figure,imshow(uint8(out));
     
-%    out = uint8(out);
 
 %    out = uint8(medfilt2(out,[7 7]));
 
@@ -64,5 +63,5 @@ function[out] = getTamperingMap(path)
 %    out = uint8(imdilate(out,strel('disk', 5)));
 
 %    figure,imshow(out);
-
+    out = uint8(vectorZoom(out,dim));
 end
