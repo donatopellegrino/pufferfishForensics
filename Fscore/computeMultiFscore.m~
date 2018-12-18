@@ -10,7 +10,12 @@ maybeList = {maybeList.name};
 maybeList = maybeList(3:end);
 [c,d] = size(maybeList);
 
-for i = 1:d
+out = zeros(c,d);
+for i = 11:11
     disp(i);
-    
+    trueI = double(imread(strcat(trueMapsPath, "/", trueList{i})));
+    imshow(trueI);
+    maybeI = double(imread(strcat(maybeMapsPath, "/", maybeList{i})));
+    imshow(maybeI);
+    out(i) = f_measure(trueI,maybeI);
 end

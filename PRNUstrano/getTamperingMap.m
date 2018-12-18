@@ -33,9 +33,8 @@ function[out] = getTamperingMap(path)
             out(i+1,j+1) = corr2(I(y1:y2,x1:x2).*PRNU(y1:y2,x1:x2),den(y1:y2,x1:x2));
         end
     end
-
-
-    out = imgaussfilt(out,2);
+    
+    out = imgaussfilt(out,5);
     
     %imshow(toImage(out));
     
@@ -46,22 +45,26 @@ function[out] = getTamperingMap(path)
     for i = 1:a
         for j = 1:b
             if out(i,j)<threshold
-                out(i,j) = 0;
+                out(i,j) = 1;
             else
-                out(i,j) = 255;
+                out(i,j) = 0;
             end
         end
     end
     
-    figure,imshow(uint8(out));
+    %figure,imshow(uint8(out));
     
 
 %    out = uint8(medfilt2(out,[7 7]));
 
-%    out = uint8(imopen(out,strel('disk',3)));
+%    out = imopen(out,strel('disk',3));
 
-%    out = uint8(imdilate(out,strel('disk', 5)));
+    out = imerode(out,strel('disk', 10));
+
+%    out = imdilate(out,strel('disk', 5));
+
+    out = imclose(out,strel('disk',5));
 
 %    figure,imshow(out);
-    out = uint8(vectorZoom(out,dim));
+    out = vectorZoom(out,dim);
 end

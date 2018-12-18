@@ -1,19 +1,19 @@
-trueMapsPath  = uigetdir();
+trueMapsPath  = '/home/donato/Projects/multimedia/dev-dataset/dev-dataset-maps';%uigetdir();
 trueList = dir(trueMapsPath);
 trueList = {trueList.name};
 trueList = trueList(3:end);
 [a,b] = size(trueList);
 
-maybeMapsPath  = uigetdir();
+maybeMapsPath  = '/home/donato/Projects/multimedia/pufferfishForensics/PRNUstrano/outputMaps';%uigetdir();
 maybeList = dir(maybeMapsPath);
 maybeList = {maybeList.name};
 maybeList = maybeList(3:end);
 [c,d] = size(maybeList);
 
 out = zeros(c,d);
-for i = 1:10
+for i = 1:d
     disp(i);
-    maybeI = double(imread(strcat(maybeMapsPath, "/", maybeList{i})));
-    trueI = double(imread(strcat(trueMapsPath, "/", trueList{i})));
+    trueI = imread(strcat(trueMapsPath, "/", trueList{i}));
+    maybeI = logical(imread(strcat(maybeMapsPath, "/", maybeList{i})));
     out(i) = f_measure(trueI,maybeI);
 end
