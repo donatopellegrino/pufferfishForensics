@@ -9,7 +9,7 @@ list = list(3:end);
 
 fMeasures = zeros(1,20);
 
-for i = 1:20
+for i = 1:100
     disp(i);
     temp = getTamperingMap(strcat(cameraPath, "/", list{i}));
     %imshow(temp);
