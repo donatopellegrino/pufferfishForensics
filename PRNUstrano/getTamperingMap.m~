@@ -39,23 +39,22 @@ function[out] = getTamperingMap(path)
     
     maxVal = max(out(:));
     minVal = min(out(:));
-    
-    limit = (maxVal-minVal)*0.5;
-    threshold = minVal+limit;
-    tempOut = out < threshold;
-    [blob,blobSize] = cleanClose(tempOut);
-    
-    [a,b]=size(out);
-    
-    while blobSize > (a*b)*0.4
-        limit = limit * 0.9;
-        threshold = minVal+limit;
-        tempOut = out < threshold;
-        [blob,blobSize] = cleanClose(tempOut);
+    threshold = minVal+(maxVal-minVal)*0.5;
+    [a,b] = size(out);
+    for i = 1:a
+        for j = 1:b
+            if out(i,j)<threshold
+                out(i,j) = 1;
+            else
+                out(i,j) = 0;
+            end
+        end
     end
     
-    out = blob;
-    out = imclose(out,strel('disk',3));
+    
+    
+    
+    out = cleanClose(out);
     out = vectorZoom(out,dim);
 end
 
