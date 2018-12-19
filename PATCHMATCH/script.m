@@ -1,8 +1,8 @@
 blockDim = 7;
-input = imread('lena.bmp');
+original = imread('lena.bmp');
 
-[dimx,dimy] = size(input);
-input = input(1:(floor(dimx/blockDim))*blockDim,1:(floor(dimy/blockDim))*blockDim);
+[dimx,dimy] = size(original);
+input = original(1:(floor(dimx/blockDim))*blockDim,1:(floor(dimy/blockDim))*blockDim);
 [blocksX,blocksY] = size(input);
 blocksX = floor(dimx/blockDim);
 blocksY = floor(dimy/blockDim);
@@ -16,7 +16,7 @@ for i = 1:blocksX
         bestMse(i,j) = 100000;
         for k = 1:blocksX
             for l = 1:blocksY
-                if(i ~= k || j ~= l)
+                if(abs(i-k) > 3 || abs(j-l) > 3)
                    mse = immse(input(i*blockDim-(blockDim-1):i*blockDim,j*blockDim-(blockDim-1):j*blockDim),input(k*blockDim-(blockDim-1):k*blockDim,l*(blockDim)-(blockDim-1):l*blockDim));
                    if (mse < bestMse(i,j)) 
                        bestBlockX(i,j) = k;
@@ -55,6 +55,19 @@ for i = 1:(blocksX-1)
        end
 end
 figure;
-imshow(uint8(edited),[0 255]);
-
-%TODO: riportare l'immagine finale a dimx,dimy
+output = imresize(edited,blockDim,'nearest');
+[outputX,outputY] = size(output);
+for i = 1:dimx
+    for j = (outputY+1):dimy
+        output(i,j) = 0;
+    end
+end
+for i = 1:dimy
+    for j = (outputX+1):dimx
+        output(j,i) = 0;
+    end
+end
+imshow(output);
+    
+    
+    %TODO: riportare l'immagine finale a dimx,dimy
