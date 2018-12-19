@@ -34,8 +34,7 @@ function[out] = getTamperingMap(path)
         end
     end
     
-    out = imgaussfilt(out,1);
-    
+    out = imgaussfilt(out,10);
     
     maxVal = max(out(:));
     minVal = min(out(:));
@@ -55,8 +54,12 @@ function[out] = getTamperingMap(path)
     end
     
     out = blob;
-    out = imclose(out,strel('disk',3));
+    
+    out = fillHoles(out);
+    
+    %out = imclose(out,strel('disk',3));
     out = vectorZoom(out,dim);
+    
 end
 
 

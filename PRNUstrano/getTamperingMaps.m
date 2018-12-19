@@ -6,10 +6,10 @@ list = {list.name};
 list = list(3:end);
 
 [a,b] = size(list);
+n = 20;
+fMeasures = zeros(1,n);
 
-fMeasures = zeros(1,20);
-
-for i = 1:100
+for i = 1:n
     disp(i);
     temp = getTamperingMap(strcat(cameraPath, "/", list{i}));
     %imshow(temp);
