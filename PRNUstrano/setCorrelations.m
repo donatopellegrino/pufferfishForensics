@@ -1,6 +1,6 @@
 dirPath = '/home/donato/Projects/multimedia/dev-dataset/dev-dataset-forged';
 dim = 5;
-n = 200;
+n = 800;
 
 list = dir(dirPath);
 list = {list.name};

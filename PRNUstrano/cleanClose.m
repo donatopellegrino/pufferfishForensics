@@ -9,5 +9,6 @@ function [outputI,max] = cleanClose(inputI)
             out = i;
         end
     end
+    
     outputI = blobs == out;
 end

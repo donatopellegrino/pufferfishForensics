@@ -1,4 +1,4 @@
 correlations/
-gaussFilteredImages/
-gaussFiltereds/
+denoisedImages/
+denoiseds/
 outputMaps/
