@@ -28,14 +28,14 @@ for i = list
     map = blob;
 
     %map = fillHoles(map);
-    map = imclose(map,strel('disk',2)); %dilation ==> erotion
+    %map = imclose(map,strel('disk',2)); %dilation ==> erotion
     %    map = imdilate(map,strel('disk',4));
     %    map = imerode(map,strel('disk',10));
-    map = imopen(map,strel('disk',6)); %erotion ==> dilation
+    %map = imopen(map,strel('disk',6)); %erotion ==> dilation
     %    map = imerode(map,strel('disk',2));
     %    map = imdilate(map,strel('disk',4));
 
-    map = fillHoles(map);
+    %map = fillHoles(map);
 
     map = vectorZoom(map,dim);
 

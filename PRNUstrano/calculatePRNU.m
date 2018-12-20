@@ -10,6 +10,8 @@ function[PRNU] = calculatePRNU(path, dimY, dimX)
 
     n=zeros(dimY,dimX);
     d=zeros(dimY,dimX);
+    
+    
     for i = 1:noOfImages
         tempImage = imread([path filesep imageList(i).name]);
         tempImage = tempImage(:,:,2);
